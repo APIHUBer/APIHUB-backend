@@ -2,10 +2,10 @@
 # @author <a href="https://github.com/zanyuanyang">Zanyuan Yang</a>
 
 -- 创建库
-create database if not exists my_db;
+create database if not exists apihub;
 
 -- 切换库
-use my_db;
+use apihub;
 
 -- 用户表
 create table if not exists user
