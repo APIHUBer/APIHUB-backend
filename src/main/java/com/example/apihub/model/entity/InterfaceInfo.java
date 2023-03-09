@@ -35,6 +35,15 @@ public class InterfaceInfo implements Serializable {
     private String url;
 
     /**
+     * request parameters
+     * @document
+     * [
+     *  {"name": "username", "type": "string"}
+     * ]
+     */
+    private String requestParams;
+
+    /**
      * request Header
      */
     private String requestHeader;
