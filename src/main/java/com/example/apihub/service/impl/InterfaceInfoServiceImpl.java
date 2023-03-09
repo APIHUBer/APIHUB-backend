@@ -33,14 +33,15 @@ public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, I
 		String name = interfaceInfo.getName();
 		// 创建时，参数不能为空
 		if (add) {
-			ThrowUtils.throwIf(StringUtils.isAnyBlank(name), ErrorCode.PARAMS_ERROR);
+//			ThrowUtils.throwIf(StringUtils.isAnyBlank(name), ErrorCode.PARAMS_ERROR);
+			if (StringUtils.isAnyBlank(name)) {
+				throw new BusinessException(ErrorCode.PARAMS_ERROR);
+			}
 		}
 		// 有参数则校验
-		if (StringUtils.isNotBlank(name)) {
-			throw new BusinessException(ErrorCode.PARAMS_ERROR, "标题过长");
-		}
-		if (StringUtils.isNotBlank(name) && name.length() < 50) {
-			throw new BusinessException(ErrorCode.PARAMS_ERROR, "内容过长");
+
+		if (StringUtils.isNotBlank(name) && name.length() > 50) {
+			throw new BusinessException(ErrorCode.PARAMS_ERROR, "Content Too Long");
 		}
 	}
 

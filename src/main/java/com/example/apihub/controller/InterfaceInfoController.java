@@ -3,19 +3,20 @@ package com.example.apihub.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.apihub.annotation.AuthCheck;
-import com.example.apihub.common.BaseResponse;
-import com.example.apihub.common.DeleteRequest;
-import com.example.apihub.common.ErrorCode;
-import com.example.apihub.common.ResultUtils;
+import com.example.apihub.common.*;
 import com.example.apihub.constant.CommonConstant;
 import com.example.apihub.exception.BusinessException;
 import com.example.apihub.model.dto.interfaceinfo.InterfaceInfoAddRequest;
+import com.example.apihub.model.dto.interfaceinfo.InterfaceInfoInvokeRequest;
 import com.example.apihub.model.dto.interfaceinfo.InterfaceInfoQueryRequest;
 import com.example.apihub.model.dto.interfaceinfo.InterfaceInfoUpdateRequest;
 import com.example.apihub.model.entity.InterfaceInfo;
 import com.example.apihub.model.entity.User;
+import com.example.apihub.model.enums.InterfaceInfoStatusEnum;
 import com.example.apihub.service.InterfaceInfoService;
 import com.example.apihub.service.UserService;
+import com.example.apihubclientsdk.client.APIHUBClient;
+import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -26,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * 帖子接口
+ * Interface Management
  *
  * @author <a href="https://github.com/zanyuanyang">Zanyuan Yang</a>
  */
@@ -42,7 +43,10 @@ public class InterfaceInfoController {
     @Resource
     private UserService userService;
 
-    // region 增删改查
+    @Resource
+    private APIHUBClient apihubClient;
+
+    // region CRUD
 
     /**
      * 创建
@@ -197,5 +201,103 @@ public class InterfaceInfoController {
 
     // endregion
 
+    /**
+     * publish
+     *
+     * @param idRequest
+     * @param request
+     * @return
+     */
+    @PostMapping("/online")
+    @AuthCheck(mustRole = "admin")
+    public BaseResponse<Boolean> onlineInterfaceInfo(@RequestBody IdRequest idRequest,
+                                                     HttpServletRequest request) {
+
+        if(idRequest == null || idRequest.getId() <= 0){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        Long id = idRequest.getId();
+        // Check id exist or not
+        InterfaceInfo oldInterfaceInfo = interfaceInfoService.getById(id);
+        if (oldInterfaceInfo == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR, "interface access fail");
+        }
+        // check interface can use or not
+        com.example.apihubclientsdk.model.User user = new com.example.apihubclientsdk.model.User();
+        user.setUsername("Test");
+        String username = apihubClient.getUsernameByPost(user);
+        if(StringUtils.isBlank(username)){
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR);
+        }
+        // only admin can update
+        InterfaceInfo interfaceInfo = new InterfaceInfo();
+        interfaceInfo.setId(id);
+        interfaceInfo.setStatus(InterfaceInfoStatusEnum.ONLINE.getValue());
+        boolean result = interfaceInfoService.updateById(interfaceInfo);
+        return ResultUtils.success(result);
+    }
+
+
+    /**
+     * offline
+     *
+     * @param idRequest
+     * @param request
+     * @return
+     */
+    @PostMapping("/offline")
+    @AuthCheck(mustRole = "admin")
+    public BaseResponse<Boolean> offlineInterfaceInfo(@RequestBody IdRequest idRequest,
+                                                     HttpServletRequest request) {
+
+        if(idRequest == null || idRequest.getId() <= 0){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        Long id = idRequest.getId();
+        // Check id exist or not
+        InterfaceInfo oldInterfaceInfo = interfaceInfoService.getById(id);
+        if (oldInterfaceInfo == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR, "interface access fail");
+        }
+        // only admin can update
+        InterfaceInfo interfaceInfo = new InterfaceInfo();
+        interfaceInfo.setId(id);
+        interfaceInfo.setStatus(InterfaceInfoStatusEnum.OFFLINE.getValue());
+        boolean result = interfaceInfoService.updateById(interfaceInfo);
+        return ResultUtils.success(result);
+    }
+
+    /**
+     * invoke
+     * @param interfaceInfoInvokeRequest
+     * @param request
+     * @return
+     */
+    @PostMapping("/invoke")
+    public BaseResponse<Object> invokeInterfaceInfo(@RequestBody InterfaceInfoInvokeRequest interfaceInfoInvokeRequest,
+                                                      HttpServletRequest request) {
+
+        if(interfaceInfoInvokeRequest == null || interfaceInfoInvokeRequest.getId() <= 0){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        Long id = interfaceInfoInvokeRequest.getId();
+        String userRequestParams = interfaceInfoInvokeRequest.getUserRequestParams();
+        // Check id exist or not
+        InterfaceInfo oldInterfaceInfo = interfaceInfoService.getById(id);
+        if (oldInterfaceInfo == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+        if(oldInterfaceInfo.getStatus() == InterfaceInfoStatusEnum.OFFLINE.getValue()){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "Interface Closed");
+        }
+        User loginUser = userService.getLoginUser(request);
+        String accessKey = loginUser.getAccessKey();
+        String secretKey = loginUser.getSecretKey();
+        APIHUBClient tempClient = new APIHUBClient(accessKey, secretKey);
+        Gson gson = new Gson();
+        com.example.apihubclientsdk.model.User user = gson.fromJson(userRequestParams, com.example.apihubclientsdk.model.User.class);
+        String usernameByPost = tempClient.getUsernameByPost(user);
+        return ResultUtils.success(usernameByPost);
+    }
 
 }

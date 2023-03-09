@@ -23,6 +23,10 @@ spring:
     password: Jaying.1996
   # Redis 配置
   # todo 需替换配置，然后取消注释
+  redis:
+    port: 6379
+    host: localhost
+    database: 0
 #  redis:
 #    database: 1
 #    host: localhost
@@ -91,3 +95,7 @@ knife4j:
   enable: true
   setting:
     language: en-US
+apihub:
+  client:
+    access-key: yupi
+    secret-key: abcdefgh
