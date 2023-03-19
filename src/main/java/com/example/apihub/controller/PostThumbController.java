@@ -4,13 +4,13 @@ import com.example.apihub.common.BaseResponse;
 import com.example.apihub.common.ErrorCode;
 import com.example.apihub.common.ResultUtils;
 import com.example.apihub.model.dto.postthumb.PostThumbAddRequest;
-import com.example.apihub.model.entity.User;
 import com.example.apihub.exception.BusinessException;
 import com.example.apihub.service.PostThumbService;
 import com.example.apihub.service.UserService;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import com.example.apihubcommon.model.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

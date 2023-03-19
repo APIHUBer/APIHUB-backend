@@ -1,7 +1,8 @@
 package com.example.apihub.mapper;
 
-import com.example.apihub.model.entity.InterfaceInfo;
+
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.apihubcommon.model.entity.InterfaceInfo;
 
 /**
 * @author jayingyoung

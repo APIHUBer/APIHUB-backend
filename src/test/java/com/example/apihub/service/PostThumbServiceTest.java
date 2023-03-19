@@ -1,9 +1,8 @@
 package com.example.apihub.service;
 
-import com.example.apihub.model.entity.User;
-
 import javax.annotation.Resource;
 
+import com.example.apihubcommon.model.entity.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

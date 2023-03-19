@@ -1,8 +1,8 @@
 package com.example.apihub.service;
 
 import com.example.apihub.model.entity.PostThumb;
-import com.example.apihub.model.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.apihubcommon.model.entity.User;
 
 /**
  * 帖子点赞服务

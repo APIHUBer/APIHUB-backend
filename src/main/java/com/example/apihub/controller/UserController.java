@@ -5,7 +5,6 @@ import com.example.apihub.common.DeleteRequest;
 import com.example.apihub.common.ErrorCode;
 import com.example.apihub.common.ResultUtils;
 import com.example.apihub.config.WxOpenConfig;
-import com.example.apihub.model.entity.User;
 import com.example.apihub.model.vo.LoginUserVO;
 import com.example.apihub.model.vo.UserVO;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -25,6 +24,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.apihubcommon.model.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
 import me.chanjar.weixin.common.bean.oauth2.WxOAuth2AccessToken;

@@ -3,10 +3,9 @@ package com.example.apihub.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.apihub.common.ErrorCode;
 import com.example.apihub.exception.BusinessException;
-import com.example.apihub.exception.ThrowUtils;
 import com.example.apihub.mapper.InterfaceInfoMapper;
-import com.example.apihub.model.entity.InterfaceInfo;
 import com.example.apihub.service.InterfaceInfoService;
+import com.example.apihubcommon.model.entity.InterfaceInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +16,7 @@ import org.springframework.stereotype.Service;
 */
 @Service
 public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, InterfaceInfo>
-    implements InterfaceInfoService {
+		implements InterfaceInfoService {
 
 	/**
 	 * 校验

@@ -1,7 +1,7 @@
 package com.example.apihub.mapper;
 
-import com.example.apihub.model.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.apihubcommon.model.entity.User;
 
 /**
  * 用户数据库操作

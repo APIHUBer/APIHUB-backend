@@ -40,3 +40,18 @@ insert into `interface_info` (`name`, `description`, `url`, `requestHeader`, `re
 insert into `interface_info` (`name`, `description`, `url`, `requestHeader`, `responseHeader`, `status`, `method`, `userId`) values ('赖智渊', '邓志泽', 'www.emerson-mann.co', '熊明哲', '贺哲瀚', 0, '田鹏', 381422);
 insert into `interface_info` (`name`, `description`, `url`, `requestHeader`, `responseHeader`, `status`, `method`, `userId`) values ('许涛', '陆致远', 'www.vella-ankunding.name', '贾哲瀚', '莫昊焱', 0, '袁越彬', 4218096);
 insert into `interface_info` (`name`, `description`, `url`, `requestHeader`, `responseHeader`, `status`, `method`, `userId`) values ('吕峻熙', '沈鹏飞', 'www.shari-reichel.org', '郭鸿煊', '覃烨霖', 0, '熊黎昕', 493);
+
+
+-- 用户调用接口关系表
+create table if not exists `user_interface_info`
+(
+    `id` bigint not null auto_increment comment 'primary key' primary key,
+    `userId` bigint not null comment 'user id',
+    `interfaceInfoId` bigint not null comment 'interface Info id',
+    `totalNum` int default 0 not null comment 'Total number of invoke',
+    `leftNum` int default 0 not null comment 'Remain number of invoke',
+    `status` int default 0 not null comment '0-normal，1-disable',
+    `createTime` datetime default CURRENT_TIMESTAMP not null comment 'create time',
+    `updateTime` datetime default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment 'update time',
+    `isDelete` tinyint default 0 not null comment 'isDelete(0-not deleted, 1-deleted)'
+) comment 'relationship of User calls interface';

@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.apihub.mapper.UserMapper">
-    <resultMap id="BaseResultMap" type="com.example.apihub.model.entity.User">
+    <resultMap id="BaseResultMap" type="com.example.apihubcommon.model.entity.User">
         <id property="id" column="id" jdbcType="BIGINT"/>
         <result property="userName" column="userName" jdbcType="VARCHAR"/>
         <result property="userAccount" column="userAccount" jdbcType="VARCHAR"/>

@@ -4,7 +4,6 @@ import com.example.apihub.common.ErrorCode;
 import com.example.apihub.exception.BusinessException;
 import com.example.apihub.model.entity.Post;
 import com.example.apihub.model.entity.PostFavour;
-import com.example.apihub.model.entity.User;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -15,6 +14,7 @@ import com.example.apihub.service.PostFavourService;
 import com.example.apihub.service.PostService;
 import javax.annotation.Resource;
 
+import com.example.apihubcommon.model.entity.User;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

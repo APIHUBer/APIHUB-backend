@@ -2,33 +2,32 @@ package com.example.apihub.service.impl;
 
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.crypto.digest.DigestUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.apihub.common.ErrorCode;
 import com.example.apihub.constant.CommonConstant;
 import com.example.apihub.constant.UserConstant;
 import com.example.apihub.exception.BusinessException;
+import com.example.apihub.mapper.UserMapper;
 import com.example.apihub.model.dto.user.UserQueryRequest;
-import com.example.apihub.model.entity.User;
 import com.example.apihub.model.enums.UserRoleEnum;
 import com.example.apihub.model.vo.LoginUserVO;
 import com.example.apihub.model.vo.UserVO;
-import com.example.apihub.utils.SqlUtils;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.example.apihub.mapper.UserMapper;
 import com.example.apihub.service.UserService;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import javax.servlet.http.HttpServletRequest;
-
+import com.example.apihub.utils.SqlUtils;
+import com.example.apihubcommon.model.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 用户服务实现
@@ -43,7 +42,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     /**
      * 盐值，混淆密码
      */
-    private static final String SALT = "zanyuan";
+    private static final String SALT = "yupi";
 
     @Override
     public long userRegister(String userAccount, String userPassword, String checkPassword) {
@@ -92,13 +91,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public LoginUserVO userLogin(String userAccount, String userPassword, HttpServletRequest request) {
         // 1. 校验
         if (StringUtils.isAnyBlank(userAccount, userPassword)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "参数为空");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "Cannot empty");
         }
         if (userAccount.length() < 4) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "账号错误");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "Account Incorrect");
         }
         if (userPassword.length() < 8) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "密码错误");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "Password Incorrect");
         }
         // 2. 加密
         String encryptPassword = DigestUtils.md5DigestAsHex((SALT + userPassword).getBytes());
@@ -110,7 +109,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 用户不存在
         if (user == null) {
             log.info("user login failed, userAccount cannot match userPassword");
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "用户不存在或密码错误");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "User does not exist or password incorrect!");
         }
         // 3. 记录用户的登录态
         request.getSession().setAttribute(UserConstant.USER_LOGIN_STATE, user);

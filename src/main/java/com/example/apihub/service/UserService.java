@@ -1,16 +1,15 @@
 package com.example.apihub.service;
 
-import com.example.apihub.model.dto.user.UserQueryRequest;
-import com.example.apihub.model.entity.User;
-import com.example.apihub.model.vo.LoginUserVO;
-import com.example.apihub.model.vo.UserVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
-
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-
+import com.example.apihub.model.dto.user.UserQueryRequest;
+import com.example.apihub.model.vo.LoginUserVO;
+import com.example.apihub.model.vo.UserVO;
+import com.example.apihubcommon.model.entity.User;
 import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 用户服务

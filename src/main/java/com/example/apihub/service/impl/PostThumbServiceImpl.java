@@ -4,7 +4,6 @@ import com.example.apihub.common.ErrorCode;
 import com.example.apihub.exception.BusinessException;
 import com.example.apihub.model.entity.Post;
 import com.example.apihub.model.entity.PostThumb;
-import com.example.apihub.model.entity.User;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.apihub.mapper.PostThumbMapper;
@@ -12,6 +11,7 @@ import com.example.apihub.service.PostService;
 import com.example.apihub.service.PostThumbService;
 import javax.annotation.Resource;
 
+import com.example.apihubcommon.model.entity.User;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -2,11 +2,11 @@ package com.example.apihub.service;
 
 import com.example.apihub.model.entity.Post;
 import com.example.apihub.model.entity.PostFavour;
-import com.example.apihub.model.entity.User;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.apihubcommon.model.entity.User;
 
 /**
  * 帖子收藏服务

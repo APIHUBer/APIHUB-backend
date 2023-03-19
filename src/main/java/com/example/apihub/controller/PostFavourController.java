@@ -7,7 +7,6 @@ import com.example.apihub.model.dto.post.PostQueryRequest;
 import com.example.apihub.model.dto.postfavour.PostFavourAddRequest;
 import com.example.apihub.model.dto.postfavour.PostFavourQueryRequest;
 import com.example.apihub.model.entity.Post;
-import com.example.apihub.model.entity.User;
 import com.example.apihub.model.vo.PostVO;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.apihub.exception.BusinessException;
@@ -18,6 +17,7 @@ import com.example.apihub.service.UserService;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import com.example.apihubcommon.model.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

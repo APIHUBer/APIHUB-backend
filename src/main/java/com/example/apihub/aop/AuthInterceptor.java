@@ -1,7 +1,6 @@
 package com.example.apihub.aop;
 
 import com.example.apihub.common.ErrorCode;
-import com.example.apihub.model.entity.User;
 import com.example.apihub.model.enums.UserRoleEnum;
 import com.example.apihub.annotation.AuthCheck;
 import com.example.apihub.exception.BusinessException;
@@ -9,6 +8,7 @@ import com.example.apihub.service.UserService;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import com.example.apihubcommon.model.entity.User;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
